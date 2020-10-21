@@ -1,0 +1,64 @@
+{
+  "basics": {
+    "name": "Daniel Creppel",
+    "label": "Software Engineer",
+    "email": "creppel@usc.edu",
+    "phone": "(213) 440-3814",
+    "website": "http://dancreppel.com",
+    "summary": "A summary of me...",
+    "social": [
+      {
+        "network": "LinkedIn",
+        "username": "Daniel Creppel",
+        "url": "https://www.linkedin.com/in/daniel-creppel-7b289318a"
+      },
+      {
+        "network": "GitHub",
+        "username": "dancreppel",
+        "url": "https://github.com/dancreppel"
+      }
+    ]
+  },
+  "work": [
+    {
+      "company": "Company",
+      "position": "President",
+      "website": "http://company.com",
+      "startDate": "2013-01-01",
+      "endDate": "2014-01-01",
+      "summary": "Description...",
+      "highlights": [
+        "Started the company"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "App Academy",
+      "area": "Full-Stack Software Engineering",
+      "studyType": "Certification",
+      "graduation": "July 2020"
+    },
+    {
+      "institution": "University of Southern California",
+      "area": "Industrial and Systems Engineering",
+      "studyType": "Bachelors",
+      "graduation": "December 2019"
+    }
+  ],
+  "skills": [
+    {
+      "name": "JavaScript",
+      "experience": "Very Experienced"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Wildlife",
+      "keywords": [
+        "Ferrets",
+        "Unicorns"
+      ]
+    }
+  ]
+}
