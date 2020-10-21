@@ -17,12 +17,12 @@ module.exports = function(controller) {
     typing.addAction('next_thread','typing');
 
     typing.addAction('complete', 'next_thread');
-    
+
     // use the before handler to delay the next message 
     typing.before('next_thread',  async () => {
         return new Promise((resolve) => {
             // simulate some long running process
-            setTimeout(resolve, 1500);
+            setTimeout(resolve, 500);
         });
     });
 
