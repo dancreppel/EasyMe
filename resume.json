@@ -1,11 +1,10 @@
 {
   "basics": {
     "name": "Daniel Creppel",
-    "label": "Software Engineer",
-    "email": "creppel@usc.edu",
+    "profession": "Software Engineer",
+    "email": "dancreppel@gmail.com",
     "phone": "(213) 440-3814",
-    "website": "http://dancreppel.com",
-    "summary": "A summary of me...",
+    "website": "https://www.dancreppel.com/",
     "social": [
       {
         "network": "LinkedIn",
@@ -21,15 +20,18 @@
   },
   "work": [
     {
-      "company": "Company",
-      "position": "President",
-      "website": "http://company.com",
-      "startDate": "2013-01-01",
-      "endDate": "2014-01-01",
-      "summary": "Description...",
-      "highlights": [
-        "Started the company"
-      ]
+      "company": "Expanded Rubbers & Plastics",
+      "position": "a Consultant",
+      "website": "http://expandedrubber.com/",
+      "startDate": "January 2019",
+      "endDate": "December 2019"
+    },
+    {
+      "company": "USC ITS",
+      "position": "a Software Engineer",
+      "website": "https://itservices.usc.edu/",
+      "startDate": "June 2017",
+      "endDate": "August 2017"
     }
   ],
   "education": [
@@ -48,17 +50,54 @@
   ],
   "skills": [
     {
-      "name": "JavaScript",
-      "experience": "Very Experienced"
+      "name": "JavaScript"
+    },
+    {
+      "name": "React"
+    },
+    {
+      "name": "Redux"
+    },
+    {
+      "name": "Express.js"
+    },
+    {
+      "name": "Ruby"
+    },
+    {
+      "name": "Ruby on Rails"
+    },
+    {
+      "name": "MongoDB"
+    },
+    {
+      "name": "PostgreSQL"
+    },
+    {
+      "name": "HTML"
+    },
+    {
+      "name": "CSS"
     }
   ],
-  "interests": [
+  "projects": [
     {
-      "name": "Wildlife",
-      "keywords": [
-        "Ferrets",
-        "Unicorns"
-      ]
+      "name": "Slime Simulator",
+      "description": "Start as the weakest monster, a slime. However, you do not have to stay as the weakest creature. Climb the monster food chain by consuming other creatures. This game is a top down simulator. Move around the map using your directional keys and eat those smaller than yourself.",
+      "link": "https://dancreppel.github.io/Slime-Sim/",
+      "repo": "https://github.com/dancreppel/Slime-Sim"
+    },
+    {
+      "name": "FoG",
+      "description": "Fans of Gaming is a clone of Steam. An online store for purchasing and reviewing digital games.",
+      "link": "https://fans-of-gaming.herokuapp.com/#/",
+      "repo": "https://github.com/dancreppel/FoG"
+    },
+    {
+      "name": "Blox",
+      "description": "Blox is a music production application and community that allows people with no musical background or experience to create music and share it with the world.",
+      "link": "https://morning-plains-24273.herokuapp.com/#/",
+      "repo": "https://github.com/danjamesyee/Blox"
     }
   ]
 }
