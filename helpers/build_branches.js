@@ -9,45 +9,58 @@ module.exports = function buildBranches (node, controller) {
     let convo = new BotkitConversation(convoId, controller);
     const quickReplies = [];
 
-    node.value.forEach((obj, nodeIdx) => {
-      let objKeys = Object.keys(obj);
-      // the first key is the identifier 
-      let identifier = objKeys[0];
-      let quickReply = {
-        title: obj[identifier],
-        payload: obj[identifier]
+    node.value.forEach((el, nodeIdx) => {
+      if (typeof el === "object") {
+        let objKeys = Object.keys(el);
+        // the first key is the identifier
+        let identifier = objKeys[0];
+        let quickReply = {
+          title: el[identifier],
+          payload: el[identifier],
+        };
+
+        quickReplies.push(quickReply);
+
+        // create a psuedo node in which the identifier is the name of the node
+        // and the rest of the keys are the values associated with said node
+
+        // prevent changes to original object
+        Object.freeze(el);
+        //create a copy of the obj
+        let value = Object.assign({}, el);
+        // delete the identifier which is the first field
+        delete value[identifier];
+
+        let child = new Node(node, el[identifier], value);
+        buildBranches(child, controller);
+      } else {
+        // * In this case el is a string, therefore its name and value are same
+        let child = new Node(node, el, el);
+        // push the el straight to the quick reply
+        // res in this case is also the el
+        let payload = buildBranches(child, controller);
+        let quickReply = {
+          title: el,
+          payload
+        };
+
+        quickReplies.push(quickReply);
       }
-
-      quickReplies.push(quickReply);
-
-      // create a psuedo node in which the identifier is the name of the node
-      // and the rest of the keys are the values associated with said node
-
-      // prevent changes to original object
-      Object.freeze(obj);
-      //create a copy of the obj
-      let value = Object.assign({}, obj);
-      // delete the identifier which is the first field
-      delete value[identifier];
-
-      let child = new Node(node, obj[identifier], value);
-      buildBranches(child, controller);
     });
-    
+
     let options = {
       text: `What would you like to know about ${node.name}?`,
-      quick_replies: quickReplies
-    }
+      quick_replies: quickReplies,
+    };
 
     convo.addMessage(options);
     controller.addDialog(convo);
 
     // Add listener for convo
-    controller.hears(node.name, 'message', async (bot, message) => {
-      await bot.beginDialog('typing');
+    controller.hears(node.name, "message", async (bot, message) => {
+      await bot.beginDialog("typing");
       await bot.beginDialog(node.name);
     });
-
 
     // Create follow up dialog
     followUp(node, controller);
