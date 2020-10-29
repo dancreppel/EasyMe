@@ -16,7 +16,7 @@ module.exports = function buildBranches (node, controller) {
         let identifier = objKeys[0];
         let quickReply = {
           title: el[identifier],
-          payload: el[identifier],
+          payload: node.name + " : " + el[identifier],
         };
 
         quickReplies.push(quickReply);
@@ -80,7 +80,7 @@ module.exports = function buildBranches (node, controller) {
       if (res) {
         quickReply.payload = res;
       } else {
-        quickReply.payload = key;
+        quickReply.payload = node.name + ' : ' + key;
       }
       quickReplies.push(quickReply);
     }
@@ -125,12 +125,22 @@ module.exports = function buildBranches (node, controller) {
       return `error: in the resume json file, value must not be empty for the 
       field "${node.name}" in "${node.parent.name}"`;
     } else {
-      controller.hears(async(message) => { return message.text === node.value }, 'message', async(bot, message) => {
-        await bot.beginDialog('typing');
-        await bot.beginDialog('followUp' + node.parent.name);
-      })
+      async(message) => { return message.text === node.value }
+
+      controller.hears(
+        async (message) => {
+          return message.text === node.parent.name + ' : ' + node.name;
+        },
+        "message",
+        async (bot, message) => {
+          await bot.beginDialog("typing");
+          await bot.reply(message, node.value);
+          await bot.beginDialog("typing");
+          await bot.beginDialog("followUp" + node.parent.name);
+        }
+      );
   
-      let payload = node.value;
+      let payload = node.parent.name + ' : ' + node.name;
       return payload;
     }
   }
