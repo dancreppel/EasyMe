@@ -1,7 +1,7 @@
-const FollowUp = require("../Custom/follow_up");
+const FollowUp = require("../helpers/follow_up");
 
 module.exports = (controller) => {
-  const convoId = "followUpBasics";
-  const branches = ["Lobby", "Basics", "Farewell"];
-  FollowUp(controller, branches, convoId);
+  // const convoId = "followUpBasics";
+  // const branches = ["Lobby", "Basics", "Farewell"];
+  // FollowUp(controller, branches, convoId);
 };
