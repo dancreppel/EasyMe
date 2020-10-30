@@ -3,7 +3,7 @@ module.exports = function findAncestors (node, ancestors = []) {
     ancestors.push(node.name);
     return ancestors;
   } else {
-    ancestors.push(node.name);
+    ancestors.push(node.parent.name + ' : ' + node.name);
     return findAncestors(node.parent, ancestors);
   }
 };
