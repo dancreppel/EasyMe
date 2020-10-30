@@ -103,6 +103,10 @@
     {
       "name": "Wildlife",
       "keywords": ["Ferrets", "Unicorns"]
+    }, 
+    {
+       "name": "Gaming",
+       "keywords": ["EFT", "Doki Doki Literature Club"]
     }
   ],
   "references": [
