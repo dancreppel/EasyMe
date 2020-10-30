@@ -89,6 +89,20 @@ module.exports = function buildBranches (node, controller) {
       return `error: in the resume json file, value must not be empty for the 
       field "${node.name}" in "${node.parent.name}"`;
     } else {
+      // format replies for images
+      let reply;
+      if (node.name === "picture" || "image") {
+
+      }
+      // format replies for links
+      else if (node.name === "website" || node.name === "url" || node.name === "link") {
+        reply = node.value.link(node.value);
+      }
+      // otherwise normal format
+      else {
+        reply = node.value;
+      }
+      
       controller.hears(
         async (message) => {
           return message.text === node.parent.name + ' : ' + node.name;
@@ -96,13 +110,32 @@ module.exports = function buildBranches (node, controller) {
         "message",
         async (bot, message) => {
           await bot.beginDialog("typing");
-          await bot.reply(message, node.value);
+
+          let reply;
+          if (node.name === "picture" || node.name === "image") {
+            // format replies for images
+            reply = `<img class="chatBot-img" src=${node.value}>`;
+          } else if (
+            node.name === "website" ||
+            node.name === "url" ||
+            node.name === "link"
+          ) {
+            // format replies for links
+            reply = node.value.link(node.value);
+          } else {
+            // otherwise normal format
+            reply = node.value;
+          }
+
+          await bot.reply(message, reply);
           await bot.beginDialog("typing");
           // a terminal node has no followup, only its parent has a followup
           // followup's are uniquely identified by using a node's name and its
           // parent's, so look for grandparents name and parents name to begin
           // appropriate followup dialog
-          await bot.beginDialog("followUp" + node.parent.parent.name + node.parent.name);
+          await bot.beginDialog(
+            "followUp" + node.parent.parent.name + node.parent.name
+          );
         }
       );
   
