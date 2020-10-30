@@ -2,7 +2,7 @@ const findAncestry = require('./find_ancestry');
 const { BotkitConversation } = require('botkit');
 
 module.exports = (node, controller) => {
-  const CONVO_ID = "followUp" + node.name;
+  const CONVO_ID = "followUp" + node.parent.name + node.name;
   const convo = new BotkitConversation(CONVO_ID, controller);
 
   let ancestry = findAncestry(node);
