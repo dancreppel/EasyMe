@@ -1,12 +1,10 @@
 const Node = require('./node');
 const followUp = require('./follow_up');
-const { BotkitConversation } = require('botkit');
+const buildConvo = require('./build_convo');
 
 // note: this function will be called within a feature, so controller will be provided
 module.exports = function buildBranches (node, controller) {
   if (Array.isArray(node.value)) {
-    let convoId = node.name;
-    let convo = new BotkitConversation(convoId, controller);
     const quickReplies = [];
 
     node.value.forEach((el, nodeIdx) => {
@@ -48,30 +46,19 @@ module.exports = function buildBranches (node, controller) {
       }
     });
 
-    let options = {
-      text: `What would you like to know about ${node.name}?`,
-      quick_replies: quickReplies,
-    };
-
-    convo.addMessage(options);
-    controller.addDialog(convo);
-
-    // Add listener for convo
-    controller.hears(node.name, "message", async (bot, message) => {
-      await bot.beginDialog("typing");
-      await bot.beginDialog(node.name);
-    });
+    buildConvo({ node, quickReplies, controller });
 
     // Create follow up dialog
     followUp(node, controller);
+
 
     // no need to return anything because parent doesn't need to know about
     // child's quick replies
     return null;
   } else if (typeof node.value === 'object') { 
     const quickReplies = [];
-    const convoId = node.name;
-    const convo = new BotkitConversation(convoId, controller);
+    // const convoId = node.parent.name + " : " + node.name;
+    // const convo = new BotkitConversation(convoId, controller);
 
     for (const key in node.value) {
       let child = new Node(node, key, node.value[key])
@@ -85,30 +72,7 @@ module.exports = function buildBranches (node, controller) {
       quickReplies.push(quickReply);
     }
 
-    // Allow the user to return to the parent's quick replies
-    // However, you cannot go up the tree at root because root has no parent
-    if (node.name !== 'main') {
-      let goBackOption = {
-        title: 'go back',
-        payload: node.parent.name
-      }
-
-      quickReplies.push(goBackOption);
-    }
-
-    let options = {
-      text: `What would you like to know about ${node.name}?`,
-      quick_replies: quickReplies
-    }
-
-    convo.addMessage(options);
-    controller.addDialog(convo);
-
-    // Add listener for convo
-    controller.hears(node.name, 'message', async(bot,message) => {
-      await bot.beginDialog('typing');
-      await bot.beginDialog(node.name);
-    });
+    buildConvo({ node, quickReplies, controller});
 
     // Create follow up dialog
     followUp(node, controller);
@@ -125,8 +89,6 @@ module.exports = function buildBranches (node, controller) {
       return `error: in the resume json file, value must not be empty for the 
       field "${node.name}" in "${node.parent.name}"`;
     } else {
-      async(message) => { return message.text === node.value }
-
       controller.hears(
         async (message) => {
           return message.text === node.parent.name + ' : ' + node.name;
