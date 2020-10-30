@@ -98,7 +98,11 @@ module.exports = function buildBranches (node, controller) {
           await bot.beginDialog("typing");
           await bot.reply(message, node.value);
           await bot.beginDialog("typing");
-          await bot.beginDialog("followUp" + node.parent.name);
+          // a terminal node has no followup, only its parent has a followup
+          // followup's are uniquely identified by using a node's name and its
+          // parent's, so look for grandparents name and parents name to begin
+          // appropriate followup dialog
+          await bot.beginDialog("followUp" + node.parent.parent.name + node.parent.name);
         }
       );
   
