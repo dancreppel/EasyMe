@@ -89,22 +89,9 @@ module.exports = function buildBranches (node, controller) {
       return `error: in the resume json file, value must not be empty for the 
       field "${node.name}" in "${node.parent.name}"`;
     } else {
-      // format replies for images
-      let reply;
-      if (node.name === "picture" || "image") {
-
-      }
-      // format replies for links
-      else if (node.name === "website" || node.name === "url" || node.name === "link") {
-        reply = node.value.link(node.value);
-      }
-      // otherwise normal format
-      else {
-        reply = node.value;
-      }
-      
       controller.hears(
         async (message) => {
+          // check for the current location provided by the user
           return message.text === node.parent.name + ' : ' + node.name;
         },
         "message",
